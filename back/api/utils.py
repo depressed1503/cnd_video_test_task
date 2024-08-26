@@ -3,7 +3,7 @@ from django.db.models.functions import Sqrt, Power
 from django.db.models import Value
 from .models import CityModel
 import requests
-
+import os
 
 def get_two_closest_cities(lat, lon):
     # Haversine formula components
@@ -18,8 +18,7 @@ def get_two_closest_cities(lat, lon):
 
 
 def get_longitude_and_latitude(name: str):
-            # api call to get lattitude and longitude
-        response = requests.get(f'https://api.geoapify.com/v1/geocode/search?text={name}&apiKey=b0867caece604e9e903f272a4366c33b')
+        response = requests.get(f'https://api.geoapify.com/v1/geocode/search?text={name}&apiKey={os.getenv('GEOCODING_API_KEY')}')
         response.raise_for_status()
         try:
             data = response.json()
